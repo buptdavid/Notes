@@ -132,6 +132,9 @@ public class NoteEditActivity extends Activity implements OnClickListener,
 
     private View mNoteEditorPanel;
 
+    /**
+     * Note object that is working
+     */
     private WorkingNote mWorkingNote;
 
     private SharedPreferences mSharedPrefs;
@@ -179,6 +182,11 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         }
     }
 
+    /**
+     * initialize a note 
+     * @param intent
+     * @return boolean
+     */
     private boolean initActivityState(Intent intent) {
         /**
          * If the user specified the {@link Intent#ACTION_VIEW} but not provided with id,
@@ -805,6 +813,10 @@ public class NoteEditActivity extends Activity implements OnClickListener,
         return hasChecked;
     }
 
+    /**
+     * Update or Save note
+     * @return
+     */
     private boolean saveNote() {
         getWorkingText();
         boolean saved = mWorkingNote.saveNote();

@@ -209,10 +209,16 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         startAsyncNotesListQuery();
     }
 
+    /**
+     * initialize resources<br>
+     * 1. 
+     * 
+     */
     private void initResources() {
         mContentResolver = this.getContentResolver();
         mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());
         mCurrentFolderId = Notes.ID_ROOT_FOLDER;
+        // notes list
         mNotesListView = (ListView) findViewById(R.id.notes_list);
         mNotesListView.addFooterView(LayoutInflater.from(this).inflate(R.layout.note_list_footer, null),
                 null, false);
@@ -220,14 +226,17 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         mNotesListView.setOnItemLongClickListener(this);
         mNotesListAdapter = new NotesListAdapter(this);
         mNotesListView.setAdapter(mNotesListAdapter);
+        // add new note button
         mAddNewNote = (Button) findViewById(R.id.btn_new_note);
         mAddNewNote.setOnClickListener(this);
         mAddNewNote.setOnTouchListener(new NewNoteOnTouchListener());
+        
         mDispatch = false;
         mDispatchY = 0;
         mOriginY = 0;
         mTitleBar = (TextView) findViewById(R.id.tv_title_bar);
         mState = ListEditState.NOTE_LIST;
+        // Call back
         mModeCallBack = new ModeCallback();
     }
 
@@ -312,6 +321,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
             updateMenu();
         }
 
+        /**
+         * Click Delete
+         */
         public boolean onMenuItemClick(MenuItem item) {
             if (mNotesListAdapter.getSelectedCount() == 0) {
                 Toast.makeText(NotesListActivity.this, getString(R.string.menu_select_none),
@@ -326,6 +338,7 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
                     builder.setIcon(android.R.drawable.ic_dialog_alert);
                     builder.setMessage(getString(R.string.alert_message_delete_notes,
                                              mNotesListAdapter.getSelectedCount()));
+                    // Click OK Action
                     builder.setPositiveButton(android.R.string.ok,
                                              new DialogInterface.OnClickListener() {
                                                  public void onClick(DialogInterface dialog,
@@ -333,6 +346,7 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
                                                      batchDelete();
                                                  }
                                              });
+                    // Click Cancel Action
                     builder.setNegativeButton(android.R.string.cancel, null);
                     builder.show();
                     break;
@@ -462,6 +476,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         builder.show();
     }
 
+    /**
+     * Create new note action
+     */
     private void createNewNote() {
         Intent intent = new Intent(this, NoteEditActivity.class);
         intent.setAction(Intent.ACTION_INSERT_OR_EDIT);
@@ -469,6 +486,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         this.startActivityForResult(intent, REQUEST_CODE_NEW_NODE);
     }
 
+    /**
+     * Delete Notes batchly
+     */
     private void batchDelete() {
         new AsyncTask<Void, Void, HashSet<AppWidgetAttribute>>() {
             protected HashSet<AppWidgetAttribute> doInBackground(Void... unused) {
@@ -533,6 +553,10 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         }
     }
 
+    /**
+     * Open a node after click it
+     * @param data
+     */
     private void openNode(NoteItemData data) {
         Intent intent = new Intent(this, NoteEditActivity.class);
         intent.setAction(Intent.ACTION_VIEW);
@@ -557,6 +581,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         mTitleBar.setVisibility(View.VISIBLE);
     }
 
+    /**
+     * Click "写编签" 操作
+     */
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_new_note:
@@ -876,6 +903,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         from.startActivityIfNeeded(intent, -1);
     }
 
+    /**
+     * A Listener which listen a click action to a note of the list
+     */
     private class OnListItemClickListener implements OnItemClickListener {
 
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
