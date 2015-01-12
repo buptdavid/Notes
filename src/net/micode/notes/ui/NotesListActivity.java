@@ -211,10 +211,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
 
     /**
      * initialize resources<br>
-     * 1. 
-     * 
      */
     private void initResources() {
+    	// an implement of AsyncQueryHandler, it is called onStart()
         mContentResolver = this.getContentResolver();
         mBackgroundQueryHandler = new BackgroundQueryHandler(this.getContentResolver());
         mCurrentFolderId = Notes.ID_ROOT_FOLDER;
@@ -240,6 +239,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         mModeCallBack = new ModeCallback();
     }
 
+    /**
+     *  @Knowledge ActionMode  To see Blog: http://blog.csdn.net/buptdavid/article/details/42555429
+     */
     private class ModeCallback implements ListView.MultiChoiceModeListener, OnMenuItemClickListener {
         private DropdownMenu mDropDownMenu;
         private ActionMode mActionMode;
@@ -422,6 +424,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
 
     };
 
+    /**
+     * Start Query all notes
+     */
     private void startAsyncNotesListQuery() {
         String selection = (mCurrentFolderId == Notes.ID_ROOT_FOLDER) ? ROOT_FOLDER_SELECTION
                 : NORMAL_SELECTION;
@@ -431,6 +436,9 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
                 }, NoteColumns.TYPE + " DESC," + NoteColumns.MODIFIED_DATE + " DESC");
     }
 
+    /**
+     *  @Knowledge AsyncQueryHandler To see Blog: http://blog.csdn.net/buptdavid/article/details/42555603
+     */
     private final class BackgroundQueryHandler extends AsyncQueryHandler {
         public BackgroundQueryHandler(ContentResolver contentResolver) {
             super(contentResolver);
@@ -582,7 +590,7 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
     }
 
     /**
-     * Click "写编签" 操作
+     * Click "写编签" Action
      */
     public void onClick(View v) {
         switch (v.getId()) {

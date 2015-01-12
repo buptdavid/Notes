@@ -46,7 +46,7 @@ public class DataUtils {
             Log.d(TAG, "no id is in the hashset");
             return true;
         }
-
+        // @Knowledge ContentProviderOperation,  To see blog: http://blog.csdn.net/buptdavid/article/details/42555299
         ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
         for (long id : ids) {
             if(id == Notes.ID_ROOT_FOLDER) {
@@ -87,6 +87,7 @@ public class DataUtils {
             return true;
         }
 
+        // @Knowledge ContentProviderOperation,  To see blog: http://blog.csdn.net/buptdavid/article/details/42555299
         ArrayList<ContentProviderOperation> operationList = new ArrayList<ContentProviderOperation>();
         for (long id : ids) {
             ContentProviderOperation.Builder builder = ContentProviderOperation
