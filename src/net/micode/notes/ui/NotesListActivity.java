@@ -324,7 +324,7 @@ public class NotesListActivity extends Activity implements OnClickListener, OnIt
         }
 
         /**
-         * Click Delete
+         * Click Delete or Move
          */
         public boolean onMenuItemClick(MenuItem item) {
             if (mNotesListAdapter.getSelectedCount() == 0) {
